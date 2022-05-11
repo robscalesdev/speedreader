@@ -11,6 +11,7 @@ const SignOut = ({ clearUser, user }) => {
 
     setShouldNavigate(true)
     clearUser()
+  // eslint-disable-next-line
   }, [])
 
 

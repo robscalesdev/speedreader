@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 
 export const PageContainer = styled.div`
+    height: ${state => state.windowHeight}px;
+    overflow: hidden;
     padding: 20vw;
+    background-image: linear-gradient(100deg, #66f, #33f, #33f, #77f);
 
     @media screen and (max-width: 600px) {
         padding: 2%;
@@ -11,9 +14,11 @@ export const PageContainer = styled.div`
 
 export const PromptContainer = styled.div`
     color: #222;
-    background: lightblue;
+    background: #55f;
     padding: 10%;
     border-radius: 20px;
+    border: solid;
+    border-color: #353535;
 `
 
 export const WordWrapper = styled.div`
@@ -32,14 +37,18 @@ export const WordWrapper = styled.div`
 
 export const OptionWrapper = styled.div`
     display: flex;
-    padding: 5px 5%;
+    padding: 5px 0;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
 `
 
 export const StoryWrapper = styled.div``
 
-export const WpmWrapper = styled.div``
+export const WpmWrapper = styled.div`
+    padding: 0;
+    margin: 0;
+`
 
 export const ButtonWrapper = styled.div`
     display: flex;
@@ -60,8 +69,8 @@ export const StoryText = styled.div`
 `
 
 export const PlayButton = styled.button`
-    color: #222;
-    background: #80dE80;
+    color: #111;
+    background: #70cE70;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
@@ -74,14 +83,14 @@ export const PlayButton = styled.button`
     justify-content: center;
 
     &:hover {
-        background: #70cE70;
+        background: #60bE60;
         color: #000;
     }
 `
 
 export const StorySelectButton = styled.button`
-    color: #222;
-    background: #80dE80;
+    color: #111;
+    background: #70cE70;
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
@@ -93,7 +102,7 @@ export const StorySelectButton = styled.button`
     justify-content: center;
 
     &:hover {
-        background: #70cE70;
+        background: #60bE60;
         color: #000;
     }
 `

@@ -20,9 +20,14 @@ import { BiPlay, BiPause, BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
 const Prompts = ({ posts }) => {
 
+    const [windowHeight, setWindowHeight] = useState(window.innerHeight - 48)
+
+    useEffect(() => {
+        window.addEventListener('resize', () => setWindowHeight(window.innerHeight - 48))
+    })
 
     const { id } = useParams()
-    const [content, setContent] = useState([])
+    // const [content, setContent] = useState([])
     const [currentCount, setCurrentCount] = useState(0)
     const [activeStory, setActiveStory] = useState([])
     const [activeWord, setActiveWord] = useState('')
@@ -52,7 +57,7 @@ const Prompts = ({ posts }) => {
 
         axios.get(`${posts.find(post => post.data.id === id).data.url}.json`)
             .then(response => {
-                setContent(response.data[1].data.children)
+                // setContent(response.data[1].data.children)
                 setStoryCount(response.data[1].data.children.length - 1)
                 if (response.data[1].data.children[1]) {
                     setActiveStory(response.data[1].data.children[1].data.body.split(" "))
@@ -60,6 +65,7 @@ const Prompts = ({ posts }) => {
                 console.log(response.data[1].data.children[1].data.body.split(" "))
             })
             .catch(console.error)
+    // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -70,10 +76,11 @@ const Prompts = ({ posts }) => {
                     setCurrentCount(prev => prev + 1)
                 })
         }
+    // eslint-disable-next-line
     }, [activeStory, currentCount, play])
 
     return (
-        <PageContainer>
+        <PageContainer windowHeight={windowHeight}>
             <PromptContainer>
             <WordWrapper>
                 <Word>{activeWord}</Word>
