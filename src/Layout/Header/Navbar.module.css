@@ -1,0 +1,18 @@
+.navbar {
+    position: sticky;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 1);
+    padding-left: 5%;
+    height: 3rem;
+}
+
+.navItem {
+    color: #FFF;
+}
+
+.menu {
+    justify-content: flex-end;
+    align-items: flex-end;
+    display: flex;
+    padding-right: 5%;
+}
