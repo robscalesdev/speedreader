@@ -43,8 +43,8 @@ export const Post = styled(Link)`
   background: #eee;
 
   &:hover {
-    box-shadow: 2px 2px 2px 2px rgba(50, 50, 50, 0.5);
+    box-shadow: 2px 2px 10px 2px rgba(50, 50, 50, 0.5);
     color: #222;
-    background: #ddd;
+    background: #e5e5e5;
   }
 `

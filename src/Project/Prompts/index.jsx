@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { 
     PageContainer,
     PromptContainer,
     WordWrapper,
     Word,
     OptionWrapper,
+    WordCountWrapper,
     WpmWrapper,
     WpmInput,
     WpmSpan,
@@ -14,6 +15,7 @@ import {
     PlayButton,
     StoryWrapper,
     StoryText,
+    WordCountText,
     StorySelectButton
 } from './PromptElements';
 import { BiPlay, BiPause, BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
@@ -54,8 +56,8 @@ const Prompts = ({ posts }) => {
         // console.log(posts.find(post => post.data.id === id))
         // setContent(posts.find(post => post.data.id === id))
         // console.log(content)
-
-        axios.get(`${posts.find(post => post.data.id === id).data.url}.json`)
+        if (posts.length > 0) {
+            axios.get(`${posts.find(post => post.data.id === id).data.url}.json`)
             .then(response => {
                 // setContent(response.data[1].data.children)
                 setStoryCount(response.data[1].data.children.length - 1)
@@ -64,7 +66,12 @@ const Prompts = ({ posts }) => {
                 }
                 console.log(response.data[1].data.children[1].data.body.split(" "))
             })
-            .catch(console.error)
+            .catch(error => {
+                console.error(error)
+                return <Navigate to='/' />
+            })
+        }
+
     // eslint-disable-next-line
     }, [])
 
@@ -79,6 +86,10 @@ const Prompts = ({ posts }) => {
     // eslint-disable-next-line
     }, [activeStory, currentCount, play])
 
+    if (posts.length === 0) {
+        return <Navigate to='/' />
+    }
+
     return (
         <PageContainer windowHeight={windowHeight}>
             <PromptContainer>
@@ -87,50 +98,26 @@ const Prompts = ({ posts }) => {
             </WordWrapper>
             <OptionWrapper>
                 <StoryWrapper>
-                    <StoryText>Stories: {storyCount > 0 ? `${storyCount}` : '0'}</StoryText>
+                    <StoryText>Story: 1 of {storyCount > 0 ? `${storyCount}` : '0'}</StoryText>
                 </StoryWrapper>
-                <ButtonWrapper>
-                    <StorySelectButton><BiArrowToLeft /></StorySelectButton>
-                    <PlayButton onClick={togglePause}>{play ? <BiPause /> : <BiPlay />}</PlayButton>
-                    <StorySelectButton><BiArrowToRight /></StorySelectButton>
-                </ButtonWrapper>
+                <WordCountWrapper>
+                    <WordCountText>
+                        {activeStory.length} words
+                    </WordCountText>
+                </WordCountWrapper>
                 <WpmWrapper>
                     <WpmInput type="text" value={wpm} onChange={handleWpm} />
                     <WpmSpan> wpm</WpmSpan>
                 </WpmWrapper>
             </OptionWrapper>
+            <ButtonWrapper>
+                    <StorySelectButton><BiArrowToLeft /></StorySelectButton>
+                    <PlayButton onClick={togglePause}>{play ? <BiPause /> : <BiPlay />}</PlayButton>
+                    <StorySelectButton><BiArrowToRight /></StorySelectButton>
+            </ButtonWrapper>
             </PromptContainer>
         </PageContainer>
     )
-    
-    
-    // <div style={{ padding: '10% 20%'}}>
-    //     <div style={{
-    //         borderStyle: 'solid',
-    //         borderWidth: '1px',
-    //         borderColor: 'gray',
-    //         borderRadius: '3px'
-    //     }}>
-    //     {storyCount === 0 && <h2>No responses yet</h2>}
-    //         <h5>Stories: {storyCount}</h5>
-    //         <div style={{
-    //             height: '30vh',
-    //             width: '50vw',
-    //             padding: 'auto',
-    //             display: 'flex',
-    //             alignItems: 'center',
-    //             justifyContent: 'center',
-    //             borderStyle: 'solid',
-    //             borderWidth: '1px',
-    //             borderColor: 'gray',
-    //             borderRadius: '3px'
-    //         }}>
-    //             <h3>{activeWord}</h3>
-    //         </div>
-    //         <input type="text" value={wpm} style={{ width: '3rem' }} onChange={handleWpm}></input><span>words per minute</span>
-    //         <button onClick={togglePause}>{play ? "Pause" : "Play"}</button>
-    //     </div>
-    // </div>
 }
 
 export default Prompts
