@@ -15,7 +15,7 @@ import history from '../browserHistory';
 // import Project from 'Project';
 // import PageError from 'shared/components/PageError';
 
-const ProjectRoutes = ({ user, setUser, clearUser, posts, setPosts }) => (
+const ProjectRoutes = ({ user, setUser, clearUser, posts, setPosts, wpm, setWpm }) => (
   <main>
     <Header user={user} />
     <Routes history={history}>
@@ -54,7 +54,7 @@ const ProjectRoutes = ({ user, setUser, clearUser, posts, setPosts }) => (
       />
       <Route
         path='/story/:id'
-        element={<Prompts posts={posts} />}
+        element={<Prompts posts={posts} wpm={wpm} setWpm={setWpm} />}
       />
     </Routes>
   </main>

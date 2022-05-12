@@ -20,7 +20,7 @@ import {
 } from './PromptElements';
 import { BiPlay, BiPause, BiArrowToLeft, BiArrowToRight } from 'react-icons/bi'
 
-const Prompts = ({ posts }) => {
+const Prompts = ({ posts, wpm, setWpm }) => {
 
     const [windowHeight, setWindowHeight] = useState(window.innerHeight - 48)
 
@@ -35,7 +35,6 @@ const Prompts = ({ posts }) => {
     const [activeWord, setActiveWord] = useState('')
     const [storyCount, setStoryCount] = useState(1)
     const [play, setPlay] = useState(false)
-    const [wpm, setWpm] = useState(250)
 
     const wordDelay = new Promise((resolve, reject) => {
         setTimeout(() => {
