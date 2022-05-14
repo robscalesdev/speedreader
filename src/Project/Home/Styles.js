@@ -114,7 +114,7 @@ export const PromptTextWrapper = styled.div`
 
 export const PromptText = styled.p`
   color: #fff;
-  font-size: 4rem;
+  font-size: 3rem;
 `
 
 export const PromptControlsWrapper = styled.div`
@@ -138,13 +138,22 @@ const ControlWrapper = styled.div`
   height: 100%;
   font-size: 0.9rem;
   color: #fff;
-  max-width: 40%;
+  max-width: 30%;
   margin: 0 1rem;
 `
 
 export const WpmWrapper = styled(ControlWrapper)`
   left: 0;
   border-radius: 0 0 0 8px;
+
+  /* .input {
+    width: 3rem;
+  } */
+`
+
+export const WpmInput = styled.input`
+  width: 3rem;
+  margin: 0 0.4rem;
 `
 
 export const StorySelect = styled(ControlWrapper)`
@@ -179,12 +188,16 @@ export const PauseIcon = styled(BiPause)`
 export const RewindArrow = styled(RiRewindFill)`
   margin: 0 0.5rem 0 0.5rem;
   font-size: 1.2em;
+  cursor: pointer;
 `
 
 export const LeftArrow = styled(FaStepBackward)`
-  margin: 0;
+  /* margin: 0; */
+  margin: 0 0.5rem;
+  cursor: pointer;
 `
 
 export const RightArrow = styled(FaStepForward)`
   margin: 0 0.5rem;
+  cursor: pointer;
 `

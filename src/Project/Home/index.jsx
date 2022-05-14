@@ -20,7 +20,8 @@ import {
     PauseIcon,
     LeftArrow,
     RightArrow,
-    RewindArrow
+    // RewindArrow,
+    WpmInput
 } from './Styles';
 // import React, { useEffect, useState } from 'react';
 // import { getExample, createExample } from '../../api/examples'
@@ -61,7 +62,7 @@ const Home = ({ user, posts, setPosts }) => {
     // play current story state
     const [play, setPlay] = useState(false)
     const [currWord, setCurrWord] = useState(0)
-    const [wpm] = useState(250)
+    const [wpm, setWpm] = useState(250)
 
     const handleActiveSub = ( event ) => {
         setActiveSub(event.target.name)
@@ -106,13 +107,15 @@ const Home = ({ user, posts, setPosts }) => {
         }
     }
 
-    const handleRewindStory = () => {
-        if (currWord > 10) {
-            setCurrWord(prev => prev - 50)
-        } else {
-            setCurrWord(0)
-        }
-    }
+    // rewind works, but the button messed up the flow
+    // might implement later
+    // const handleRewindStory = () => {
+    //     if (currWord > 10) {
+    //         setCurrWord(prev => prev - 50)
+    //     } else {
+    //         setCurrWord(0)
+    //     }
+    // }
 
     const handleNextStory = () => {
         if (currStory < storyCount - 1) {
@@ -182,14 +185,16 @@ const Home = ({ user, posts, setPosts }) => {
                             </Post>
                             <Prompt selected={selected}>
                                 <PromptTextWrapper selected={selected}>
-                                    <PromptText>{activeStory.length > 0 && activeStory[currWord]}</PromptText>
+                                    <PromptText>{activeStory.length > 0 && currWord === 0 ? activeStory.length + ' words' : activeStory[currWord]}</PromptText>
                                 </PromptTextWrapper>
                                 <PromptControlsWrapper selected={selected}>
-                                    <WpmWrapper>{activeStory.length} words at 250 wpm</WpmWrapper>
+                                    <WpmWrapper>
+                                        <WpmInput value={wpm} onChange={(e) => setWpm(e.target.value)} /> words per minute
+                                    </WpmWrapper>
                                     <PlayButton onClick={() => setPlay(!play)}>{play ? <PauseIcon /> : <PlayIcon />}</PlayButton>
                                     <StorySelect>
                                         <LeftArrow onClick={handlePrevStory} />
-                                        <RewindArrow onClick={handleRewindStory} />
+                                        {/* <RewindArrow onClick={handleRewindStory} /> */}
                                         {currStory + 1} of {storyCount}
                                         <RightArrow onClick={handleNextStory} />
                                     </StorySelect>
