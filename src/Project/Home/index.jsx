@@ -21,10 +21,13 @@ import {
     LeftArrow,
     RightArrow,
     // RewindArrow,
-    WpmInput
+    HeaderArrow,
+    WpmInput,
+    TimeSpan
 } from './Styles';
 // import React, { useEffect, useState } from 'react';
 // import { getExample, createExample } from '../../api/examples'
+import { format } from 'date-fns'
 
 import axios from 'axios';
 
@@ -177,10 +180,11 @@ const Home = ({ user, posts, setPosts }) => {
             <PostsWrapper>
                 {posts.map((post, i) => {
                     const selected = (selectedPost === i)
+                    const created = format(new Date(post.data.created_utc * 1000), 'MM/dd p').split(' ')
                     return (
                         <PostWrapper key={post.data.id} selected={selected}>
                             <Post onClick={(e) => expandPost(e, post.data.url, i)}>
-                                <PostHeader>{post.data.ups}</PostHeader>
+                                <PostHeader><HeaderArrow />{post.data.ups} <TimeSpan>{created[0] + ' at ' + created[1] + created[2]}</TimeSpan></PostHeader>
                                 <PostBody>{post.data.title}</PostBody>
                             </Post>
                             <Prompt selected={selected}>

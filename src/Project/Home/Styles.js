@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import {
   BiPause,
-  BiPlay
+  BiPlay,
+  BiTrendingUp
 } from 'react-icons/bi';
 
 import {
@@ -59,7 +60,7 @@ export const PostsWrapper = styled.div`
   padding: 10%;
 
   @media screen and (max-width: 600px) {
-    padding: 1%;
+    padding: 2rem 0.5rem;
   }
 `
 
@@ -87,8 +88,20 @@ export const Post = styled.div`
 `
 
 export const PostHeader = styled.div`
-  font-size: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: #D02500;
+`
+
+export const TimeSpan = styled.span`
+  margin-left: 0.5rem;
+  color: #c59595;
+  font-weight: 450;
+`
+
+export const HeaderArrow = styled(BiTrendingUp)`
+  font-size: 1.5rem;
+  margin-right: 0.3rem
 `
 
 export const PostBody = styled.p`
