@@ -101,6 +101,8 @@ const Home = ({ user, posts, setPosts }) => {
     }
 
     const handlePrevStory = () => {
+        setPlay(false)
+
         if (currWord > 10) {
             setCurrWord(0)
         }
@@ -121,6 +123,8 @@ const Home = ({ user, posts, setPosts }) => {
     // }
 
     const handleNextStory = () => {
+        setPlay(false)
+        
         if (currStory < storyCount - 1) {
             setCurrStory(prev => prev + 1)
             setCurrWord(0)
