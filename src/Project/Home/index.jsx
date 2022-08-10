@@ -20,31 +20,16 @@ import {
     PauseIcon,
     LeftArrow,
     RightArrow,
-    // RewindArrow,
     HeaderArrow,
     WpmInput,
     TimeSpan
 } from './Styles';
-// import React, { useEffect, useState } from 'react';
-// import { getExample, createExample } from '../../api/examples'
+import { getNewPosts, getPostContents } from '../../api/posts'
 import { format } from 'date-fns'
 
 import axios from 'axios';
 
 const Home = ({ user, posts, setPosts }) => {
-
-    // const [item, setItems] = useState('Hello world!')
-
-    // useEffect(() => {
-    //     getExample(example._id, user)
-    //     .then(() => {
-    //         setItems('Hello World!')
-    //     })
-    //     .catch(console.error)
-    // }, [])
-
-    // imafishyfriend@gmail.com
-    // limited1Fishy!
 
     const subs = [
         'WritingPrompts',
@@ -71,30 +56,33 @@ const Home = ({ user, posts, setPosts }) => {
         setActiveSub(event.target.name)
     }
 
+    // when a prompt is clicked on
     const expandPost = (e, url, i) => {
+
+        // default to paused, set to first word of the current story
         setPlay(false)
         setCurrWord(0)
 
+        // creates the toggle to make the dropdown disappear
         if (selectedPost === i) {
             setSelectedPost(-1)
             setActiveStory([])
+        // if selecting a new story, make it appear
         } else {
             setSelectedPost(i)
             setCurrStory(0)
 
-            axios.get(`${url}.json`)
+            // get one post
+            getPostContents(url)
             .then(response => {
-                // console.log(response.data)
-                if (response.data[1].data.children.length > 0) {
-                    const stories = response.data[1].data.children.filter(post => post.data.author !== 'AutoModerator')
-                    setAllStories(stories)
-                    setActiveStory(stories[0].data.body.split(' '))
-                    setStoryCount(stories.length)
-                } else {
-                    setAllStories([])
-                    setActiveStory([])
-                    setStoryCount(0)
-                }
+                setAllStories(response.data.stories)
+                setActiveStory(response.data.stories[0])
+                setStoryCount(response.data.stories.length)
+            })
+            .catch(() => {
+                setAllStories([])
+                setActiveStory([])
+                setStoryCount(0)
             })
         }
         
@@ -112,7 +100,7 @@ const Home = ({ user, posts, setPosts }) => {
         }
     }
 
-    // rewind works, but the button messed up the flow
+    // rewind works, but the button messed up the UI "flow"
     // might implement later
     // const handleRewindStory = () => {
     //     if (currWord > 10) {
@@ -138,27 +126,21 @@ const Home = ({ user, posts, setPosts }) => {
     });
 
     useEffect(() => {
-        axios({
-            url: `https://www.reddit.com/r/${activeSub}/top/.json`,
-            method: 'GET'
+        // get all posts
+        getNewPosts(activeSub)
+        .then(response => {
+            setPosts(response.data.posts)
         })
-          .then(response => {
-            // console.log(response.data.data.children)
-            // console.log(response.data.data.children.filter(child => child.data.num_comments > 1))
-
-            // makes sure each post has at least one response, or filters it
-            setPosts(response.data.data.children.filter(child => child.data.num_comments > 1))
-          })
-          .catch(console.error)
+        .catch(console.error)
     // eslint-disable-next-line
     }, [activeSub])
 
     useEffect(() => {
         if (allStories.length > 0) {
-            setActiveStory(allStories[currStory].data.body.split(' '))
+            setActiveStory(allStories[currStory])
         }
     // eslint-disable-next-line
-    }, [currStory])
+    }, [allStories, currStory])
 
     useEffect(() => {
         if (play && currWord < activeStory.length) {
@@ -170,7 +152,6 @@ const Home = ({ user, posts, setPosts }) => {
     // eslint-disable-next-line
     }, [activeStory, currWord, play])
 
-    // console.log(activeStory)
     return (
         <ProjectPage>
             <SubredditContainer>
@@ -187,7 +168,7 @@ const Home = ({ user, posts, setPosts }) => {
                     const created = format(new Date(post.data.created_utc * 1000), 'MM/dd p').split(' ')
                     return (
                         <PostWrapper key={post.data.id} selected={selected}>
-                            <Post onClick={(e) => expandPost(e, post.data.url, i)}>
+                            <Post onClick={(e) => expandPost(e, post.data.permalink, i)}>
                                 <PostHeader><HeaderArrow />{post.data.ups} <TimeSpan>{created[0] + ' at ' + created[1] + created[2]}</TimeSpan></PostHeader>
                                 <PostBody>{post.data.title}</PostBody>
                             </Post>
