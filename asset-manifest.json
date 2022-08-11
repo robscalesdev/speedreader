@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/speedreader/static/css/main.5e74cd7a.chunk.css",
-    "main.js": "/speedreader/static/js/main.21dca871.chunk.js",
-    "main.js.map": "/speedreader/static/js/main.21dca871.chunk.js.map",
+    "main.js": "/speedreader/static/js/main.c92728a3.chunk.js",
+    "main.js.map": "/speedreader/static/js/main.c92728a3.chunk.js.map",
     "runtime-main.js": "/speedreader/static/js/runtime-main.32aade92.js",
     "runtime-main.js.map": "/speedreader/static/js/runtime-main.32aade92.js.map",
     "static/js/2.a1d861d5.chunk.js": "/speedreader/static/js/2.a1d861d5.chunk.js",
@@ -16,6 +16,6 @@
     "static/js/runtime-main.32aade92.js",
     "static/js/2.a1d861d5.chunk.js",
     "static/css/main.5e74cd7a.chunk.css",
-    "static/js/main.21dca871.chunk.js"
+    "static/js/main.c92728a3.chunk.js"
   ]
 }
